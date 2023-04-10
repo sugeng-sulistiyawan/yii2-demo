@@ -76,7 +76,7 @@ jobs:
           TEST_DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
       
       - name: Deploy to Server
-        uses: sugeng-sulistiyawan/yii2-basic-deploy@v1
+        uses: sugeng-sulistiyawan/yii2-basic-dieploy@v1
         with:
           user: $USER
           host: $HOST
