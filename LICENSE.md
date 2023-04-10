@@ -1,4 +1,4 @@
-Copyright © 2008 by Yii Software LLC (http://www.yiisoft.com)
+Copyright © 2023 by Sugeng Sulistiyawan (https://sugengsulistiyawan.my.id)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
