@@ -1,9 +1,13 @@
-# GitHub Action for Yii Framework with MySQL
-name: Testing Yii2 with MySQL
-on: [push, pull_request]
+name: Yii2
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
 jobs:
   yii:
-    name: Yii2 (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     env:
       DB_USERNAME: root
@@ -23,24 +27,16 @@ jobs:
         ports:
           - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    strategy:
-      fail-fast: false
-      matrix:
-        php-versions: ['7.4', '8.0']
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Set Node.js 10.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10.x
 
       # Docs: https://github.com/shivammathur/setup-php
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: '8.0'
           extensions: mbstring, intl, gd, imagick, zip, dom, mysql
           coverage: xdebug
 
@@ -64,16 +60,11 @@ jobs:
 
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader --no-interaction
-
-      # - name: Prepare the application
-      #   run: |
-      #     php -r "file_exists('.env') || copy('.env.dist', '.env');"
-      #     php console/yii app/setup
-      #     npm install --development
-      #     npm run build
-      #   env:
-      #     DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
-      #     TEST_DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
+      
+      - name: Directory Permissions
+        run: |
+          chmod -R 775 web
+          chmod -R 777 runtime web/assets
 
       - name: Run Tests
         run: |
