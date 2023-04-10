@@ -63,23 +63,21 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --prefer-dist --optimize-autoloader --no-interaction
 
-      - name: Prepare the application
-        run: |
-          php -r "file_exists('.env') || copy('.env.dist', '.env');"
-          php console/yii app/setup
-          npm install --development
-          npm run build
-        env:
-          DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
-          TEST_DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
+      # - name: Prepare the application
+      #   run: |
+      #     php -r "file_exists('.env') || copy('.env.dist', '.env');"
+      #     php console/yii app/setup
+      #     npm install --development
+      #     npm run build
+      #   env:
+      #     DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
+      #     TEST_DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
 
       - name: Run Tests
         run: |
           vendor/bin/codecept build
-          php tests/bin/yii app/setup --interactive=0
-          nohup php -S localhost:8080 > yii.log 2>&1 &
           vendor/bin/codecept run
         env:
           DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
