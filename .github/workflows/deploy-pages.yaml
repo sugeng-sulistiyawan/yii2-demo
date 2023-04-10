@@ -1,4 +1,4 @@
-name: Yii2
+name: Build and Deploy
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  yii:
+  build:
+    name: Build and Deploy
     runs-on: ubuntu-latest
     env:
       DB_USERNAME: root
@@ -73,3 +74,15 @@ jobs:
         env:
           DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
           TEST_DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
+      
+      - name: Deploy to Server
+        uses: sugeng-sulistiyawan/yii2-basic-deploy@v1
+        with:
+          user: ${{ user }}
+          host: ${{ host }}
+          port: ${{ port }}   # optional
+          path: ${{ path }}
+          owner: ${{ owner }} # optional
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          
