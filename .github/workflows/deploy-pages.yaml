@@ -78,11 +78,10 @@ jobs:
       - name: Deploy to Server
         uses: sugeng-sulistiyawan/yii2-basic-deploy@v1
         with:
-          user: ${{ user }}
-          host: ${{ host }}
-          port: ${{ port }}   # optional
-          path: ${{ path }}
-          owner: ${{ owner }} # optional
+          user: ${{ USER }}
+          host: ${{ HOST }}
+          port: ${{ PORT }}   # optional
+          path: ${{ PATH }}
+          owner: ${{ OWNER }} # optional
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-          
