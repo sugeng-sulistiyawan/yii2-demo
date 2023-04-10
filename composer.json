@@ -15,6 +15,11 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.4.0",
+        "diecoding/yii2-aws-s3": "@dev",
+        "diecoding/yii2-dropify": "@dev",
+        "diecoding/yii2-slick": "@dev",
+        "diecoding/yii2-toastr": "@dev",
+        "diecoding/yii2-seeder": "@dev",
         "yiisoft/yii2": "~2.0.45",
         "yiisoft/yii2-bootstrap5": "~2.0.2",
         "yiisoft/yii2-symfonymailer": "~2.0.3"

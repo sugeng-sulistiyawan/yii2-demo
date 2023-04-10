@@ -1,0 +1,42 @@
+name: Deploy Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@master
+
+      - name: Setup Environment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+
+      - name: Install Packages
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Deploy to Server
+        uses: yiier/yii2-base-deploy@master
+
+        with:
+          user: user
+          host: host
+          port: port
+          path: path
+          owner: owner
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+        
+      - name: Apply migration
+        run: php yii migrate --interactive=0
