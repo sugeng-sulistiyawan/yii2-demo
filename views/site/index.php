@@ -2,6 +2,8 @@
 
 /** @var yii\web\View $this */
 
+use diecoding\barcode\generator\Barcode;
+
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
@@ -50,4 +52,31 @@ $this->title = 'My Yii Application';
         </div>
 
     </div>
+</div>
+
+
+<div class="mt-5">
+
+<?= Barcode::widget([
+    'value' => 'Hi world!',
+]);
+?>
+
+<?= Barcode::widget([
+    'tag' => 'img',
+    'value' => 'Hi world!',
+]);
+?>
+
+<?= Barcode::widget([
+    'tag' => 'canvas',
+    'value' => 'Hi world!',
+]);
+?>
+
+<?= Barcode::widget([
+  'value'  => 'EXAMPLE\n1234',
+  'format' => Barcode::CODE128A
+]); ?>
+
 </div>
